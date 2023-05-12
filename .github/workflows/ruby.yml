@@ -20,7 +20,7 @@ jobs:
     - name: Step 3 Run tests
       run: cucumber
     - name: Step 4 Archive production artifacts
-      uses: actions/upload-artifacts@v3
+      uses: actions/upload-artifact@v3
       if: ${{  always() }}
       with: 
         name: report
