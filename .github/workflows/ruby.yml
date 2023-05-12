@@ -31,7 +31,7 @@ jobs:
       
     - name: Step 3 Execute test # Executa os Testes em modo headless
       run:
-          bundle exec cucumber -p ci
+          bundle exec cucumber -p
           
     - name: Step 4 Archive production artifacts # permite que fazer o download do arquivo relatorio.
       uses: actions/upload-artifact@v3
