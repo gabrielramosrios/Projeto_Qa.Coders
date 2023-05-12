@@ -1,8 +1,16 @@
 name: Ruby
 
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
 
 jobs:
   test:
@@ -10,18 +18,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Instalar ruby
+    - name: Step 1 Checkout code # Obtém os arquivos do repositório
+      uses: actions/checkout@v3
+   
+    - name: Step 2 Set up Ruby # Realiza a instalação do Ruby e suas dependências
       uses: ruby/setup-ruby@v1
+       
       with:
-        ruby-version: '3.1'
-    - name: Step 2 Install dependencies
-      run: bundle install
-    - name: Step 3 Run tests
-      run: cucumber
-    - name: Step 4 Archive production artifacts
+        ruby-version: '3.0'
+        bundler-cache: true # executa 'bundle install' e armazena em cache as gems instaladas
+
+      
+    - name: Step 3 Execute test # Executa os Testes em modo headless
+      run:
+          bundle exec cucumber -p ci
+          
+    - name: Step 4 Archive production artifacts # permite que fazer o download do arquivo relatorio.
       uses: actions/upload-artifact@v3
-      if: ${{  always() }}
       with: 
-        name: report
-        path: ./reports/report.html
+          name: reports
+          path: ./reports/relatorio.html
