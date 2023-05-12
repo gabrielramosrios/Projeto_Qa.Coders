@@ -3,11 +3,6 @@ name: Ruby
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
 
 jobs:
   test:
@@ -16,7 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: INSTALAR RUBY
+    - name: Instalar ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.1'
@@ -25,7 +20,7 @@ jobs:
     - name: Step 3 Run tests
       run: cucumber
     - name: Step 4 Archive production artifacts
-      uses: action/upload-artifacts@v3
+      uses: actions/upload-artifacts@v3
       if: ${{  always() }}
       with: 
         name: report
